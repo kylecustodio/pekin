@@ -1,6 +1,8 @@
 package work.custodio.pekin.controller;
 
 import java.util.List;
+import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,10 +31,9 @@ public class AccountsController {
     }
 
     @GetMapping("/{id}")
-    public Account getAccount(@PathVariable Long id) {
-        return accountRepository
-            .findById(id)
-            .orElseThrow(RuntimeException::new);
+    public ResponseEntity<Account> getAccount(@PathVariable Long id) {
+        Optional<Account> account = accountRepository.findById(id);
+        return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -45,15 +46,19 @@ public class AccountsController {
         @PathVariable Long id,
         @RequestBody Account account
     ) {
-        Account existingAccount = accountRepository.findById(id).orElseThrow(RuntimeException::new);
-        existingAccount.setName(account.getName());
-        existingAccount = accountRepository.save(existingAccount);
-
-        return ResponseEntity.ok(existingAccount);
+        if (!accountRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        account.setId(id);
+        Account updatedAccount = accountRepository.save(account);
+        return ResponseEntity.ok(updatedAccount);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Account> deleteAccount(@PathVariable Long id) {
+        if (!accountRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
         accountRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

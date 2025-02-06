@@ -1,5 +1,6 @@
 package work.custodio.pekin.controller;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -34,6 +35,14 @@ public class AccountsController {
     public ResponseEntity<Account> getAccount(@PathVariable Long id) {
         Optional<Account> account = accountRepository.findById(id);
         return account.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+    }
+
+    @GetMapping("/{id}/balance")
+    public ResponseEntity<BigDecimal> getBalance(@PathVariable Long id) {
+        if (!accountRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(accountRepository.getAccountBalance(id));
     }
 
     @PostMapping

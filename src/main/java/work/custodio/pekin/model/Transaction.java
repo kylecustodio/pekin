@@ -20,6 +20,9 @@ public class Transaction {
 
     private LocalDate date;
 
+    @Column(columnDefinition = "TEXT")
+    private String description;
+
     public Account getAccount() {
         return account;
     }
@@ -50,5 +53,13 @@ public class Transaction {
 
     public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

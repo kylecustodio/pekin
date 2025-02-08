@@ -43,11 +43,7 @@ public class AccountsController {
 
     @GetMapping("/{id}/balance")
     public ResponseEntity<BigDecimal> getBalance(@PathVariable Long id) {
-        // TODO: See if this should instead be a field on Account
-        if (!accountRepository.existsById(id)) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(accountRepository.getAccountBalance(id));
+        return accountRepository.findById(id).map(Account::getBalance).map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping

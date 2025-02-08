@@ -1,8 +1,11 @@
 package work.custodio.pekin.dto;
 
+import java.math.BigDecimal;
+
 public class AccountDTO {
     private Long id;
     private String name;
+    private BigDecimal balance;
 
     public AccountDTO(Long id, String name) {
         this.id = id;
@@ -23,5 +26,13 @@ public class AccountDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public BigDecimal getBalance() {
+        return balance;
+    }
+
+    public void setBalance(BigDecimal balance) {
+        this.balance = balance;
     }
 }

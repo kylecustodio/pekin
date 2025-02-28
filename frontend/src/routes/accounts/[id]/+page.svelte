@@ -8,16 +8,16 @@
 	let loading: boolean = $state(true);
 	let transactions: Transaction[] = $state([]);
 
-	const fetchTransactions = async (accountId: number) => {
-		const res = await fetch(`http://localhost:8080/api/transactions/account/${accountId}`); // Adjust URL based on backend
+	const fetchTransactions = async () => {
+		const res = await fetch(`http://localhost:8080/api/transactions/account/${data.account.id}`); // Adjust URL based on backend
 		loading = false;
 		transactions = await res.json();
 	};
 
-	onMount(fetchTransactions(data.account.id));
+	onMount(fetchTransactions());
 </script>
 
-<div class="flex gap-4 items-center pb-4">
+<div class="flex items-center gap-4 pb-4">
 	<h1 class="font-title text-4xl">{data.account.name}</h1>
 	<div
 		class="font-body"

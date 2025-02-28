@@ -5,11 +5,11 @@
 	let accounts: Account[] = $state([]);
 	let loading: boolean = $state(true);
 
-	async function fetchAccounts() {
+	const fetchAccounts = async () => {
 		const res = await fetch('http://localhost:8080/api/accounts'); // Adjust URL based on backend
 		loading = false;
 		accounts = await res.json();
-	}
+	};
 
 	onMount(fetchAccounts);
 </script>

@@ -14,11 +14,11 @@
 		transactions = await res.json();
 	};
 
-	onMount(fetchTransactions());
+	onMount(fetchTransactions);
 </script>
 
-<div class="flex items-center gap-4 pb-4">
-	<h1 class="font-title text-4xl">{data.account.name}</h1>
+<div class="flex items-center gap-4">
+	<h1 class="font-body">{data.account.name}</h1>
 	<div
 		class="font-body"
 		class:text-red-500={data.account.balance < 0}
@@ -29,13 +29,26 @@
 </div>
 <div class="font-body">
 	{#if !loading}
-		{#each transactions as transaction}
-			<div class="flex gap-4">
-				<div>${transaction.amount}</div>
-				<div>{transaction.description ?? '-'}</div>
-				<div>{transaction.date ?? '-'}</div>
-			</div>
-		{/each}
+		<div class="flex justify-end text-sm pb-2">
+			<!-- TODO: Filtering and sorting options -->
+			<button class="cursor-pointer bg-black px-2.5 py-1.5 text-white ">+ New</button>
+		</div>
+		<div class="flex flex-col">
+			{#each transactions as transaction}
+				<div class="flex items-center p-2 hover:bg-gray-100">
+					<div class="flex flex-1 flex-col gap-0.5">
+						<div>{transaction.description ?? '-'}</div>
+						<div class="text-xs text-gray-500">{transaction.date ?? '-'}</div>
+					</div>
+					<div
+						class:text-red-500={transaction.amount < 0}
+						class:text-green-500={transaction.amount > 0}
+					>
+						${transaction.amount}
+					</div>
+				</div>
+			{/each}
+		</div>
 	{:else}
 		<div>loading...</div>
 	{/if}

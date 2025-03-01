@@ -18,9 +18,10 @@ public class Transaction {
 
     private BigDecimal amount;
 
+    @Column(nullable = false)
     private LocalDate date;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(nullable = false)
     private String description;
 
     public Account getAccount() {

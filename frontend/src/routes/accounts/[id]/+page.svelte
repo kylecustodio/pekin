@@ -29,9 +29,9 @@
 </div>
 <div class="font-body">
 	{#if !loading}
-		<div class="flex justify-end text-sm pb-2">
+		<div class="flex justify-end pb-2 text-sm">
 			<!-- TODO: Filtering and sorting options -->
-			<button class="cursor-pointer bg-black px-2.5 py-1.5 text-white ">+ New</button>
+			<button class="cursor-pointer bg-black px-2.5 py-1.5 text-white">+ New</button>
 		</div>
 		<div class="flex flex-col">
 			{#each transactions as transaction}
